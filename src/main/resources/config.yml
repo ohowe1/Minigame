@@ -1,0 +1,6 @@
+language: 'en-US'
+world: 'world'
+debug: false
+#center-x: 115
+#center-y: 60
+#center-z: -1

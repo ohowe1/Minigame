@@ -1,0 +1,14 @@
+name: Minigame
+version: ${project.version}
+main: me.ohowe12.hideandseek.Plugin
+api-version: 1.16
+
+commands:
+  minigame:
+    description: The minigame command
+
+permissions:
+  hideseek-seeker:
+    default: op
+  minigame-start:
+    default: op

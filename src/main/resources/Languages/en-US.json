@@ -1,0 +1,21 @@
+{
+  "messages": {
+    "permission": "&cYou do not have permission to do that",
+    "invalid-player": "&cThat is an invalid player",
+    "console-message": "&cYou must be a player to do that",
+    "not-a-command": "&cUnknown command. Do \"/PLUGINNAME help\" for help",
+    "not-running": "&cThe game is not running!",
+    "not-selected": "&cGame not selected! Do /minigame help for help",
+    "game-in-progress": "&cThe game is already in progress!",
+    "set-minigame": "&bSet minigame to {MINIGAME}"
+  },
+  "command-descriptions": {
+    "helpCommand": "The help command for the \"{COMMAND}\" command",
+    "hide-and-seek": "Starts the minigame of hide and seek",
+    "start": "Starts the current minigame",
+    "stop": "Stops the current minigame"
+  },
+  "headers": {
+    "help": "&9Help for &b{COMMAND} &9command"
+  }
+}
