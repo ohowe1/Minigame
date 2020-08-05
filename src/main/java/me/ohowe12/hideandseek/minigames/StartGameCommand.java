@@ -38,11 +38,9 @@ public class StartGameCommand implements PlayerCommand {
             MessageSender.sendOtherMessage(player, "not-selected");
             return;
         }
-        if (manager.getCurrentMiniGame() != null) {
-            if (manager.getCurrentMiniGame().running) {
-                MessageSender.sendInProgressMessage(player);
-                return;
-            }
+        if (manager.isGameRunning()) {
+            MessageSender.sendInProgressMessage(player);
+            return;
         }
         manager.startGame();
     }
