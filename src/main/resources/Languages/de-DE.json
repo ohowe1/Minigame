@@ -3,7 +3,7 @@
         "permission": "&cDu hast keine Erlaubnis das zu tun",
         "invalid-player": "&cDas ist ein ungültiger Spieler",
         "console-message": "&cDu musst ein Spieler sein, um das zu tun",
-        "not-a-command": "&cUnbekannter Befehl. Geb \"/PLUGINNAME help\" ein, um Hilfe zu erhalten",
+        "not-a-command": "&cUnbekannter Befehl. Geb \"/PLUGINNAME help\" ein, um Hilfe zu erhalten"
     },
     "command-descriptions": {
     },
