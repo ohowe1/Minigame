@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import me.ohowe12.hideandseek.minigame.MiniGameManager;
-import me.ohowe12.hideandseek.minigame.StartGameCommand;
+import me.ohowe12.hideandseek.minigame.StopCommand;
 import me.ohowe12.hideandseek.minigames.hideandseek.HideAndSeek;
 import me.ohowe12.hideandseek.utils.Language;
 import me.ohowe12.hideandseek.utils.MessageSender;
@@ -15,43 +15,43 @@ import org.bukkit.entity.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StartGameCommandTest {
+public class StopCommandTest {
 
-    private StartGameCommand startGameCommand;
+    private StopCommand stopGameCommand;
     final MiniGameManager miniGameManager = mock(MiniGameManager.class);
 
     @Test
     public void testWhileNull() {
         callExecute();
 
-        verify(miniGameManager, never()).startGame();
+        verify(miniGameManager, never()).stopGame();
 
         reset();
     }
 
     @Test
-    public void testWhileRunning() {
-        doReturn(HideAndSeek.class).when(miniGameManager).getCurrentMiniGameClass();
-        when(miniGameManager.isGameRunning()).thenReturn(true);
+    public void testWhileNotRunning() {
+        doReturn(mock(HideAndSeek.class)).when(miniGameManager).getCurrentMiniGame();
+        when(miniGameManager.isGameRunning()).thenReturn(false);
 
         callExecute();
 
-        verify(miniGameManager, never()).startGame();
+        verify(miniGameManager, never()).stopGame();
         reset();
     }
 
     @Test
     public void testWhileGood() {
-        doReturn(HideAndSeek.class).when(miniGameManager).getCurrentMiniGameClass();
-        when(miniGameManager.isGameRunning()).thenReturn(false);
+        doReturn(mock(HideAndSeek.class)).when(miniGameManager).getCurrentMiniGame();
+        when(miniGameManager.isGameRunning()).thenReturn(true);
 
         callExecute();
-        verify(miniGameManager).startGame();
+        verify(miniGameManager).stopGame();
         reset();
     }
 
     private void callExecute() {
-        startGameCommand.executePlayerCommand(mock(Player.class), new String[0]);
+        stopGameCommand.executePlayerCommand(mock(Player.class), new String[0]);
     }
 
 
@@ -59,7 +59,7 @@ public class StartGameCommandTest {
     public void setUp() {
         MessageSender.init(mock(Language.class));
         reset();
-        startGameCommand = new StartGameCommand(miniGameManager);
+        stopGameCommand = new StopCommand(miniGameManager);
     }
 
     private void reset() {

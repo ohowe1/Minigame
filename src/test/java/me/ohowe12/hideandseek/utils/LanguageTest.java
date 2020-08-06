@@ -1,18 +1,19 @@
 package me.ohowe12.hideandseek.utils;
 
-import me.ohowe12.hideandseek.Plugin;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import me.ohowe12.hideandseek.Plugin;
+import org.junit.Before;
+import org.junit.Test;
 
 public class LanguageTest {
+
     Language language;
     Plugin plugin;
 
@@ -23,7 +24,8 @@ public class LanguageTest {
 
     @Test
     public void testGetColorizedMessage() {
-        assertEquals("§cYou do not have permission to do that", language.getColorizedMessage("permission"));
+        assertEquals("§cYou do not have permission to do that",
+            language.getColorizedMessage("permission"));
     }
 
     @Test
@@ -38,8 +40,10 @@ public class LanguageTest {
 
         plugin = mock(Plugin.class);
         when(plugin.getLanguageCode()).thenReturn("en-US");
-        when(plugin.getResource("Languages/en-US.json")).thenReturn(getResource("Languages/en-US.json"));
-        when(plugin.getResource("Languages/de-DE.json")).thenReturn(getResource("Languages/de-DE.json"));
+        when(plugin.getResource("Languages/en-US.json"))
+            .thenReturn(getResource("Languages/en-US.json"));
+        when(plugin.getResource("Languages/de-DE.json"))
+            .thenReturn(getResource("Languages/de-DE.json"));
 
         language = new Language(plugin);
     }
