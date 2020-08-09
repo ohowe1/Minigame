@@ -12,73 +12,73 @@ import org.jetbrains.annotations.NotNull;
 
 public class Team implements Iterable<Player> {
 
-  private final List<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     private org.bukkit.scoreboard.Team bukkitTeam;
 
-  public Team(String name) {
-      bukkitTeam =
-        Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeam(name);
-    if (bukkitTeam == null) {
-      bukkitTeam = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(name);
+    public Team(String name) {
+        bukkitTeam =
+            Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeam(name);
+        if (bukkitTeam == null) {
+            bukkitTeam = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(name);
+        }
     }
-  }
 
-  public Team(String name, String prefix) {
-    this(name);
-    setPrefix(prefix);
-  }
-
-  public void setPrefix(String prefix) {
-    bukkitTeam.setPrefix(prefix);
-  }
-
-  public void setColor(ChatColor color) {
-    if (color != null) {
-      bukkitTeam.setColor(color);
+    public Team(String name, String prefix) {
+        this(name);
+        setPrefix(prefix);
     }
-  }
 
-  public void setInvis(boolean canSee) {
-    bukkitTeam.setCanSeeFriendlyInvisibles(canSee);
-  }
+    public void setPrefix(String prefix) {
+        bukkitTeam.setPrefix(prefix);
+    }
 
-  public void add(Player player) {
-    bukkitTeam.addEntry(player.getName());
-    players.add(player);
-  }
+    public void setColor(ChatColor color) {
+        if (color != null) {
+            bukkitTeam.setColor(color);
+        }
+    }
 
-  public void setOption(
-      org.bukkit.scoreboard.Team.Option option,
-      org.bukkit.scoreboard.Team.OptionStatus optionStatus) {
-    bukkitTeam.setOption(option, optionStatus);
-  }
+    public void setInvis(boolean canSee) {
+        bukkitTeam.setCanSeeFriendlyInvisibles(canSee);
+    }
 
-  public void unregister() {
-    players.clear();
-    bukkitTeam.unregister();
-  }
+    public void add(Player player) {
+        bukkitTeam.addEntry(player.getName());
+        players.add(player);
+    }
 
-  public boolean contains(Player player) {
-    return players.contains(player);
-  }
+    public void setOption(
+        org.bukkit.scoreboard.Team.Option option,
+        org.bukkit.scoreboard.Team.OptionStatus optionStatus) {
+        bukkitTeam.setOption(option, optionStatus);
+    }
 
-  public void remove(Player player) {
-    players.remove(player);
-    bukkitTeam.removeEntry(player.getName());
-  }
+    public void unregister() {
+        players.clear();
+        bukkitTeam.unregister();
+    }
 
-  public int size() {
-    return players.size();
-  }
+    public boolean contains(Player player) {
+        return players.contains(player);
+    }
 
-  @NotNull
-  @Override
-  public Iterator<Player> iterator() {
-    return players.iterator();
-  }
+    public void remove(Player player) {
+        players.remove(player);
+        bukkitTeam.removeEntry(player.getName());
+    }
 
-  @Override
-  public void forEach(Consumer<? super Player> action) {
-    players.forEach(action);
-  }
+    public int size() {
+        return players.size();
+    }
+
+    @NotNull
+    @Override
+    public Iterator<Player> iterator() {
+        return players.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Player> action) {
+        players.forEach(action);
+    }
 }

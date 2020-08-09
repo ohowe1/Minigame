@@ -14,43 +14,43 @@ import org.jetbrains.annotations.Nullable;
 public abstract class CommandCommandManager extends CommandManager
     implements CommandExecutor, TabCompleter {
 
-  public CommandCommandManager(Plugin plugin, Language language) {
-    super(plugin, language);
-    setCommandExecutor();
-  }
-
-  public CommandCommandManager(Plugin plugin) {
-    this(plugin, plugin.getLanguage());
-  }
-
-  @Override
-  public String getFullName() {
-    return getName();
-  }
-
-  @Override
-  public boolean onCommand(
-      @NotNull CommandSender sender,
-      @NotNull Command command,
-      @NotNull String label,
-      @NotNull String[] args) {
-    if (label.equalsIgnoreCase(getName())) {
-      processCommand(sender, args);
-      return true;
+    public CommandCommandManager(Plugin plugin, Language language) {
+        super(plugin, language);
+        setCommandExecutor();
     }
-    return false;
-  }
 
-  @Override
-  public @Nullable List<String> onTabComplete(
-      @NotNull CommandSender sender,
-      @NotNull Command command,
-      @NotNull String alias,
-      @NotNull String[] args) {
-    return processTabComplete(sender, args);
-  }
+    public CommandCommandManager(Plugin plugin) {
+        this(plugin, plugin.getLanguage());
+    }
 
-  private void setCommandExecutor() {
-    Objects.requireNonNull(plugin.getCommand(getName())).setExecutor(this);
-  }
+    @Override
+    public String getFullName() {
+        return getName();
+    }
+
+    @Override
+    public boolean onCommand(
+        @NotNull CommandSender sender,
+        @NotNull Command command,
+        @NotNull String label,
+        @NotNull String[] args) {
+        if (label.equalsIgnoreCase(getName())) {
+            processCommand(sender, args);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(
+        @NotNull CommandSender sender,
+        @NotNull Command command,
+        @NotNull String alias,
+        @NotNull String[] args) {
+        return processTabComplete(sender, args);
+    }
+
+    private void setCommandExecutor() {
+        Objects.requireNonNull(plugin.getCommand(getName())).setExecutor(this);
+    }
 }

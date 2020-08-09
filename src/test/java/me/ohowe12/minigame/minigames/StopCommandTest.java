@@ -17,8 +17,8 @@ import org.junit.Test;
 
 public class StopCommandTest {
 
-    private StopCommand stopGameCommand;
     final MiniGameManager miniGameManager = mock(MiniGameManager.class);
+    private StopCommand stopGameCommand;
 
     @Test
     public void testWhileNull() {
@@ -53,7 +53,6 @@ public class StopCommandTest {
     private void callExecute() {
         stopGameCommand.executePlayerCommand(mock(Player.class), new String[0]);
     }
-
 
     @Before
     public void setUp() {

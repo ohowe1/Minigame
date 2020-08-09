@@ -8,36 +8,36 @@ import org.jetbrains.annotations.NotNull;
 
 public class StopCommand implements PlayerCommand {
 
-  private final MiniGameManager manager;
+    private final MiniGameManager manager;
 
-  public StopCommand(Plugin plugin) {
-    this.manager = plugin.getMiniGameManager();
-  }
-
-  public StopCommand(MiniGameManager manager) {
-    this.manager = manager;
-  }
-
-  @Override
-  public String getName() {
-    return "stop";
-  }
-
-  @Override
-  public String getUniqueId() {
-    return "stop";
-  }
-
-  @Override
-  public void executePlayerCommand(@NotNull Player player, @NotNull String[] args) {
-    if (manager.getCurrentMiniGame() == null) {
-      MessageSender.sendNotRunningMessage(player);
-      return;
+    public StopCommand(Plugin plugin) {
+        this.manager = plugin.getMiniGameManager();
     }
-    if (!manager.isGameRunning()) {
-      MessageSender.sendNotRunningMessage(player);
-      return;
+
+    public StopCommand(MiniGameManager manager) {
+        this.manager = manager;
     }
-    manager.stopGame();
-  }
+
+    @Override
+    public String getName() {
+        return "stop";
+    }
+
+    @Override
+    public String getUniqueId() {
+        return "stop";
+    }
+
+    @Override
+    public void executePlayerCommand(@NotNull Player player, @NotNull String[] args) {
+        if (manager.getCurrentMiniGame() == null) {
+            MessageSender.sendNotRunningMessage(player);
+            return;
+        }
+        if (!manager.isGameRunning()) {
+            MessageSender.sendNotRunningMessage(player);
+            return;
+        }
+        manager.stopGame();
+    }
 }

@@ -24,8 +24,8 @@ public class LanguageTest {
 
     @Test
     public void testGetColorizedMessage() {
-        assertEquals("§cYou do not have permission to do that",
-            language.getColorizedMessage("permission"));
+        assertEquals(
+            "§cYou do not have permission to do that", language.getColorizedMessage("permission"));
     }
 
     @Test

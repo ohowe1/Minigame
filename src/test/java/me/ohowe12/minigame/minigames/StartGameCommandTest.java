@@ -17,8 +17,8 @@ import org.junit.Test;
 
 public class StartGameCommandTest {
 
-    private StartGameCommand startGameCommand;
     final MiniGameManager miniGameManager = mock(MiniGameManager.class);
+    private StartGameCommand startGameCommand;
 
     @Test
     public void testWhileNull() {
@@ -53,7 +53,6 @@ public class StartGameCommandTest {
     private void callExecute() {
         startGameCommand.executePlayerCommand(mock(Player.class), new String[0]);
     }
-
 
     @Before
     public void setUp() {

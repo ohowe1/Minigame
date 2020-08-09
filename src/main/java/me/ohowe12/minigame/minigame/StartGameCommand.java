@@ -8,41 +8,41 @@ import org.jetbrains.annotations.NotNull;
 
 public class StartGameCommand implements PlayerCommand {
 
-  private final MiniGameManager manager;
+    private final MiniGameManager manager;
 
-  public StartGameCommand(Plugin plugin) {
-    this.manager = plugin.getMiniGameManager();
-  }
-
-  public StartGameCommand(MiniGameManager manager) {
-    this.manager = manager;
-  }
-
-  @Override
-  public String getName() {
-    return "start";
-  }
-
-  @Override
-  public String getUniqueId() {
-    return "start";
-  }
-
-  @Override
-  public String getPermission() {
-    return "minigame-start";
-  }
-
-  @Override
-  public void executePlayerCommand(@NotNull Player player, @NotNull String[] args) {
-    if (manager.getCurrentMiniGameClass() == null) {
-      MessageSender.sendOtherMessage(player, "not-selected");
-      return;
+    public StartGameCommand(Plugin plugin) {
+        this.manager = plugin.getMiniGameManager();
     }
-    if (manager.isGameRunning()) {
-      MessageSender.sendInProgressMessage(player);
-      return;
+
+    public StartGameCommand(MiniGameManager manager) {
+        this.manager = manager;
     }
-    manager.startGame();
-  }
+
+    @Override
+    public String getName() {
+        return "start";
+    }
+
+    @Override
+    public String getUniqueId() {
+        return "start";
+    }
+
+    @Override
+    public String getPermission() {
+        return "minigame-start";
+    }
+
+    @Override
+    public void executePlayerCommand(@NotNull Player player, @NotNull String[] args) {
+        if (manager.getCurrentMiniGameClass() == null) {
+            MessageSender.sendOtherMessage(player, "not-selected");
+            return;
+        }
+        if (manager.isGameRunning()) {
+            MessageSender.sendInProgressMessage(player);
+            return;
+        }
+        manager.startGame();
+    }
 }

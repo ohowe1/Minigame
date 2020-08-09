@@ -6,22 +6,22 @@ import me.ohowe12.minigame.minigame.MiniGameManager;
 
 public class HideAndSeekCommand extends MiniGameCommand {
 
-  public HideAndSeekCommand(MiniGameManager manager) {
-    super(manager);
-  }
+    public HideAndSeekCommand(MiniGameManager manager) {
+        super(manager);
+    }
 
-  @Override
-  protected Class<? extends MiniGame> getMiniGameClass() {
-    return HideAndSeek.class;
-  }
+    @Override
+    protected Class<? extends MiniGame> getMiniGameClass() {
+        return HideAndSeek.class;
+    }
 
-  @Override
-  protected String getFriendlyName() {
-    return "Hide and Seek";
-  }
+    @Override
+    protected String getFriendlyName() {
+        return "Hide and Seek";
+    }
 
-  @Override
-  public String getUniqueId() {
-    return "hide-and-seek";
-  }
+    @Override
+    public String getUniqueId() {
+        return "hide-and-seek";
+    }
 }

@@ -7,32 +7,32 @@ import org.jetbrains.annotations.NotNull;
 
 public interface GlobalCommand {
 
-  String getName();
+    String getName();
 
-  String getUniqueId();
+    String getUniqueId();
 
-  default String getPermission() {
-    return null;
-  }
-
-  default String[] getReplacement() {
-    return null;
-  }
-
-  default boolean isHidden() {
-    return false;
-  }
-
-  void onCommand(@NotNull CommandSender sender, @NotNull String[] args);
-
-  default List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
-    return Collections.emptyList();
-  }
-
-  default boolean canExecute(CommandSender sender) {
-    if (getPermission() == null) {
-      return true;
+    default String getPermission() {
+        return null;
     }
-    return sender.hasPermission(getPermission());
-  }
+
+    default String[] getReplacement() {
+        return null;
+    }
+
+    default boolean isHidden() {
+        return false;
+    }
+
+    void onCommand(@NotNull CommandSender sender, @NotNull String[] args);
+
+    default List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        return Collections.emptyList();
+    }
+
+    default boolean canExecute(CommandSender sender) {
+        if (getPermission() == null) {
+            return true;
+        }
+        return sender.hasPermission(getPermission());
+    }
 }
