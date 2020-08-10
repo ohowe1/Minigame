@@ -14,6 +14,16 @@ public abstract class MiniGameCommand implements PlayerCommand {
     }
 
     @Override
+    public final String getUniqueId() {
+        return "minigame";
+    }
+
+    @Override
+    public String[] getReplacement() {
+        return new String[]{"{MINIGAME}", getFriendlyName()};
+    }
+
+    @Override
     public String getName() {
         return getFriendlyName().replace(" ", "");
     }

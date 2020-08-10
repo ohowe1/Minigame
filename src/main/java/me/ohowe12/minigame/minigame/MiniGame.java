@@ -25,6 +25,7 @@ public abstract class MiniGame implements Listener {
     protected final Location center;
     protected final ArrayList<Player> players;
     protected boolean running;
+    protected int seconds = 0;
 
     public MiniGame(
         ArrayList<Player> players,
@@ -66,6 +67,7 @@ public abstract class MiniGame implements Listener {
                     this.cancel();
                 }
                 second();
+                seconds++;
             }
         }.runTaskTimer(plugin, 0L, 20L);
     }
@@ -96,8 +98,9 @@ public abstract class MiniGame implements Listener {
         }
     }
 
-    public void end() {
+    public final void end() {
         running = false;
+        endGame();
     }
 
     protected abstract void second();
@@ -154,5 +157,6 @@ public abstract class MiniGame implements Listener {
         return true;
     }
 
+    protected abstract void endGame();
 
 }

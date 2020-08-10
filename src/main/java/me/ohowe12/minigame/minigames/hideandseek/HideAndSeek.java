@@ -28,7 +28,6 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
         new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 255, false, false, true);
     private Player seeker;
     private Team seekers;
-    private int seconds;
     private boolean stillInStartPhase = true;
     private Team hiders;
 
@@ -75,9 +74,8 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
 
     @Override
     public void start() {
-        seekers = new Team("Seekers", ChatColor.GOLD + "[SEEKER] ");
-        seekers.setColor(ChatColor.RED);
-        hiders = new Team("Hiders", ChatColor.AQUA + "[HIDER] ");
+        seekers = new Team("Seekers", ChatColor.GOLD + "[SEEKER]", ChatColor.RED);
+        hiders = new Team("Hiders", ChatColor.AQUA + "[HIDER]", ChatColor.BLUE);
         hiders.setInvis(true);
         hiders.setOption(
             org.bukkit.scoreboard.Team.Option.NAME_TAG_VISIBILITY,
@@ -101,18 +99,6 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
         border.setSize(1000);
         hiders.forEach(player -> player.addPotionEffect(INVIS));
         players.forEach(player -> player.teleport(center));
-    }
-
-    @Override
-    public void end() {
-        for (Player player : players) {
-            for (PotionEffect potionEffect : player.getActivePotionEffects()) {
-                player.removePotionEffect(potionEffect.getType());
-            }
-        }
-        hiders.unregister();
-        seekers.unregister();
-        running = false;
     }
 
     @Override
@@ -162,6 +148,17 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void endGame() {
+        for (Player player : players) {
+            for (PotionEffect potionEffect : player.getActivePotionEffects()) {
+                player.removePotionEffect(potionEffect.getType());
+            }
+        }
+        hiders.unregister();
+        seekers.unregister();
     }
 
     @Override
@@ -217,6 +214,5 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
             border.setSize(border.getSize() / 2, 60);
             playToALl(Sound.ITEM_TRIDENT_RETURN);
         }
-        seconds++;
     }
 }
