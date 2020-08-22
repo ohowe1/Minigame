@@ -2,6 +2,8 @@ package me.ohowe.minigame;
 
 import me.ohowe.minigame.maincommand.MainCommandManager;
 import me.ohowe.minigame.minigame.MiniGameManager;
+import me.ohowe.minigame.minigames.hideandseek.HideAndSeek;
+import me.ohowe.minigame.minigames.hideandseek.SeekerCommand;
 import me.ohowe.minigame.utils.Language;
 import me.ohowe.minigame.utils.Logger;
 import me.ohowe.minigame.utils.MessageSender;
@@ -51,6 +53,9 @@ public class Plugin extends JavaPlugin {
         miniGameManager = new MiniGameManager(this,
             Bukkit.getWorld(configManager.getString("world")));
         mainCommandManager = new MainCommandManager(this);
+
+        miniGameManager.registerMinigame(HideAndSeek.class, "Hide and Seek");
+        miniGameManager.registerSpecialCommand(new SeekerCommand(this, miniGameManager));
     }
 
     @Override

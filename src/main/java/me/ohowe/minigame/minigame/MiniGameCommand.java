@@ -5,12 +5,17 @@ import me.ohowe.minigame.utils.MessageSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class MiniGameCommand implements PlayerCommand {
+public class MiniGameCommand implements PlayerCommand {
 
     protected final MiniGameManager manager;
+    protected final String friendlyName;
+    protected final Class<? extends MiniGame> minigameClass;
 
-    protected MiniGameCommand(MiniGameManager manager) {
+    protected MiniGameCommand(MiniGameManager manager, Class<? extends MiniGame> minigameClass,
+        String friendlyName) {
         this.manager = manager;
+        this.minigameClass = minigameClass;
+        this.friendlyName = friendlyName;
     }
 
     @Override
@@ -28,9 +33,13 @@ public abstract class MiniGameCommand implements PlayerCommand {
         return getFriendlyName().replace(" ", "");
     }
 
-    protected abstract Class<? extends MiniGame> getMiniGameClass();
+    protected Class<? extends MiniGame> getMiniGameClass() {
+        return minigameClass;
+    }
 
-    protected abstract String getFriendlyName();
+    protected String getFriendlyName() {
+        return friendlyName;
+    }
 
     @Override
     public String getPermission() {

@@ -1,31 +1,27 @@
 package me.ohowe.minigame.minigames.hideandseek;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import me.ohowe.minigame.Plugin;
-import me.ohowe.minigame.command.PlayerCommand;
 import me.ohowe.minigame.minigame.MiniGame;
 import me.ohowe.minigame.minigame.MiniGameManager;
-import me.ohowe.minigame.utils.MessageSender;
 import me.ohowe.minigame.utils.Team;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-public class HideAndSeek extends MiniGame implements PlayerCommand {
+public class HideAndSeek extends MiniGame {
 
     private final PotionEffect INVIS =
         new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 255, false, false, true);
+    private final SeekerCommand seekerCommand;
     private Player seeker;
     private Team seekers;
     private boolean stillInStartPhase = true;
@@ -34,17 +30,9 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
     public HideAndSeek(
         ArrayList<Player> players, Plugin plugin, World world, MiniGameManager manager) {
         super(players, plugin, world, manager);
+        seekerCommand = (SeekerCommand) manager.getSpecialCommand("seeker-set");
     }
 
-    @Override
-    public String getName() {
-        return "seeker";
-    }
-
-    @Override
-    public String getUniqueId() {
-        return "seekername";
-    }
 
     private Location getClosestPlayer() {
         Location closet = new Location(world, 100000, 1000000, 100000);
@@ -58,21 +46,6 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
     }
 
     @Override
-    public String getPermission() {
-        return "hideseek-seeker";
-    }
-
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
-        plugin.getPluginLogger().debugLog("Tab Completing");
-        List<String> done = new ArrayList<>();
-        for (Player p : players) {
-            done.add(p.getName());
-        }
-        return done;
-    }
-
-    @Override
     public void start() {
         seekers = new Team("Seekers", ChatColor.GOLD + "[SEEKER]", ChatColor.RED);
         hiders = new Team("Hiders", ChatColor.AQUA + "[HIDER]", ChatColor.BLUE);
@@ -81,8 +54,11 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
             org.bukkit.scoreboard.Team.Option.NAME_TAG_VISIBILITY,
             org.bukkit.scoreboard.Team.OptionStatus.FOR_OTHER_TEAMS);
 
-        Random random = new Random();
-        seeker = players.get(random.nextInt(players.size()));
+        seeker = seekerCommand.getSeeker();
+        if (seeker == null) {
+            Random random = new Random();
+            seeker = players.get(random.nextInt(players.size()));
+        }
         seekers.add(seeker);
 
         players.forEach(
@@ -96,28 +72,21 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
 
         sendMessageToAll(seeker.getName() + " is the seeker!");
         super.start();
-        border.setSize(1000);
+        border.setSize(2000);
         hiders.forEach(player -> player.addPotionEffect(INVIS));
-        hiders.forEach(player -> player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 2)));
+        hiders.forEach(
+            player -> player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 2)));
         players.forEach(player -> player.teleport(center));
     }
 
-    @Override
-    public void executePlayerCommand(@NotNull Player player, @NotNull String[] args) {
-        if (args.length == 0) {
-            MessageSender.sendPlayerMessage(player);
-            return;
-        }
+    public void setSeeker(@NotNull Player target) {
         if (!running) {
-            MessageSender.sendNotRunningMessage(player);
+            return;
         }
         if (!stillInStartPhase) {
-            MessageSender.sendInProgressMessage(player);
             return;
         }
-        Player target = Bukkit.getPlayerExact(args[0]);
-        if (target == null || !players.contains(target)) {
-            MessageSender.sendPlayerMessage(player);
+        if (players.contains(target)) {
             return;
         }
         seeker.addPotionEffect(INVIS);
@@ -129,6 +98,10 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
         seeker.getInventory().remove(Material.ENDER_PEARL);
         seeker.removePotionEffect(PotionEffectType.INVISIBILITY);
         sendMessageToAll(seeker.getName() + " is the seeker!");
+    }
+
+    public boolean canChangeSeeker() {
+        return stillInStartPhase;
     }
 
     @Override
@@ -201,7 +174,6 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
                 playToALl(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
             }
             sendToAllPlayers(secondsString, "Seeker released in " + newSec, 20);
-            seconds++;
             return;
         }
         if (seconds == 45) {
@@ -209,12 +181,12 @@ public class HideAndSeek extends MiniGame implements PlayerCommand {
         }
         if (seconds == 120) {
             seeker.getInventory().addItem(new ItemStack(Material.COMPASS));
-            sendToAllPlayers("The seeker now has the compass!");
+            sendToAllPlayers(ChatColor.GOLD + "Beware!", "The seeker now has a compass");
         }
         if (seconds % 300 == 0) {
             sendToAllPlayers(
-                ChatColor.RED + "Shrinking world border in half!",
-                "The center is " + center.getX() + " " + center.getZ());
+                ChatColor.RED + "Stay safe!",
+                "The border is shrinking in half!");
             border.setSize(border.getSize() / 2, 60);
             playToALl(Sound.ITEM_TRIDENT_RETURN);
         }

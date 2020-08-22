@@ -3,9 +3,14 @@ package me.ohowe.minigame.minigame;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import me.ohowe.minigame.Plugin;
 import me.ohowe.minigame.command.GlobalCommand;
+import me.ohowe.minigame.command.PlayerCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -14,8 +19,12 @@ public class MiniGameManager {
 
     private final Plugin plugin;
     private final World world;
+    private final ArrayList<PlayerCommand> specialCommands = new ArrayList<>();
     private MiniGame currentMiniGame = null;
     private Class<? extends MiniGame> currentMiniGameClass = null;
+
+    // TODO make /minigame seeker sync with hide and seek
+    // TODO make minigames use translations
 
     public MiniGameManager(Plugin plugin, World world) {
         this.plugin = plugin;
@@ -36,6 +45,22 @@ public class MiniGameManager {
         }
         return currentMiniGame.running;
     }
+
+    public void registerMinigame(Class<? extends MiniGame> minigameClass, String friendlyName) {
+        plugin.getMainCommandManager()
+            .addCommand(new MiniGameCommand(this, minigameClass, friendlyName));
+    }
+
+    public void registerSpecialCommand(PlayerCommand command) {
+        specialCommands.add(command);
+        plugin.getMainCommandManager().addCommand(command);
+    }
+
+    public PlayerCommand getSpecialCommand(String commandId) {
+        Optional<PlayerCommand> optionalPlayerCommand = specialCommands.stream().filter(command -> command.getUniqueId().equalsIgnoreCase(commandId)).findFirst();
+        return optionalPlayerCommand.orElse(null);
+    }
+
 
     public List<Player> getPlayingPlayers() {
         return world.getPlayers();

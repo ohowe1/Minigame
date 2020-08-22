@@ -7,7 +7,8 @@
         "not-running": "&cThe game is not running!",
         "not-selected": "&cGame not selected! Do /minigame help for help",
         "game-in-progress": "&cThe game is already in progress!",
-        "set-minigame": "&bSet minigame to {MINIGAME}"
+        "set-minigame": "&bSet minigame to {MINIGAME}",
+        "seeker-next-round": "&bThe seeker for next round will be {PLAYER}"
     },
     "command-descriptions": {
         "helpCommand": "The help command for the \"{COMMAND}\" command",

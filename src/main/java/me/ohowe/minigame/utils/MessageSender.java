@@ -35,6 +35,12 @@ public class MessageSender {
             Formatter.formatMinigame(language.getColorizedMessage("set-minigame"), minigame));
     }
 
+    public static void sendNextRoundSeeker(CommandSender sender, String playerName) {
+        sender.sendMessage(
+            Formatter.formatPlayer(language.getColorizedMessage("seeker-next-round"), playerName)
+        );
+    }
+
     public static void sendNotRunningMessage(CommandSender sender) {
         sender.sendMessage(language.getColorizedMessage("not-running"));
     }

@@ -1,6 +1,6 @@
 name: Minigame
 version: ${project.version}
-main: me.ohowe12.hideandseek.Plugin
+main: me.ohowe.minigame.Plugin
 api-version: "1.16"
 
 commands:

@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class CaptureTheFlag extends MiniGame {
+
     private Team redTeam;
     private Team blueTeam;
 

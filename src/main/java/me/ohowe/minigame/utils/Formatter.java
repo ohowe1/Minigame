@@ -9,4 +9,8 @@ public class Formatter {
     public static String formatMinigame(String string, String minigameToPutIn) {
         return string.replace("{MINIGAME}", minigameToPutIn);
     }
+
+    public static String formatPlayer(String string, String playerName) {
+        return string.replace("{PLAYER}", playerName);
+    }
 }

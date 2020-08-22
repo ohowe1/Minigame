@@ -6,7 +6,6 @@ import me.ohowe.minigame.command.GlobalCommand;
 import me.ohowe.minigame.command.HelpCommand;
 import me.ohowe.minigame.minigame.StartGameCommand;
 import me.ohowe.minigame.minigame.StopCommand;
-import me.ohowe.minigame.minigames.hideandseek.HideAndSeekCommand;
 import me.ohowe.minigame.utils.Language;
 
 public class MainCommandManager extends CommandCommandManager {
@@ -31,11 +30,11 @@ public class MainCommandManager extends CommandCommandManager {
         return helpCommand;
     }
 
+
     @Override
     protected void createCommands() {
         helpCommand = new HelpCommand(this, language);
         addCommand(helpCommand);
-        addCommand(new HideAndSeekCommand(plugin.getMiniGameManager()));
         addCommand(new StartGameCommand(plugin));
         addCommand(new StopCommand(plugin));
     }

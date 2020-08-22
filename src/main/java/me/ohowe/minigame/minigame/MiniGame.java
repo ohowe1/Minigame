@@ -53,8 +53,9 @@ public abstract class MiniGame implements Listener {
             world,
             manager,
             plugin.getConfigManager().getInt("world-border-x"),
-            plugin.getConfigManager().getInt("world-border-z"),
-            plugin.getConfigManager().getInt("center-y"));
+            plugin.getConfigManager().getInt("center-y"),
+            plugin.getConfigManager().getInt("world-border-z")
+        );
     }
 
     public void start() {
