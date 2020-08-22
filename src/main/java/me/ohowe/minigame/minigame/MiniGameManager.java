@@ -23,7 +23,6 @@ public class MiniGameManager {
     private MiniGame currentMiniGame = null;
     private Class<? extends MiniGame> currentMiniGameClass = null;
 
-    // TODO make /minigame seeker sync with hide and seek
     // TODO make minigames use translations
 
     public MiniGameManager(Plugin plugin, World world) {
