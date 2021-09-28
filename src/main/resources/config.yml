@@ -4,3 +4,4 @@ debug: false
 world-border-x: 115
 world-border-z: -1
 center-y: 61
+world-border-width: 2000

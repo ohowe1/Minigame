@@ -72,7 +72,7 @@ public class HideAndSeek extends MiniGame {
 
         sendMessageToAll(seeker.getName() + " is the seeker!");
         super.start();
-        border.setSize(2000);
+        border.setSize(plugin.getConfigManager().getInt("world-border-width"));
         hiders.forEach(player -> player.addPotionEffect(INVIS));
         hiders.forEach(
             player -> player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 2)));
